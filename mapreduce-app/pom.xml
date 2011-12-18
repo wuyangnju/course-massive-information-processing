@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.wuyangnju.app</groupId>
+	<groupId>cn.edu.sjtu.mip</groupId>
 	<artifactId>mapreduce-app</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0</version>
@@ -36,66 +36,29 @@
 					<skipTests>true</skipTests>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<version>2.2.1</version>
-				<executions>
-					<execution>
-						<id>default-cli</id>
-						<phase>package</phase>
-						<goals>
-							<goal>single</goal>
-						</goals>
-						<configuration>
-							<descriptors>
-								<descriptor>${assemblyDirectory}${file.separator}bin.xml</descriptor>
-							</descriptors>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh-external</artifactId>
+				<version>2.1</version>
+			</extension>
+		</extensions>
 	</build>
 
 	<dependencies>
-
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.8.2</version>
-			<scope>test</scope>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-core</artifactId>
+			<version>0.20.2</version>
 		</dependency>
-
-		<dependency>
-			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.6.4</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>1.7.2</version>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-	<groupId>org.apache.hadoop</groupId>
-	<artifactId>hadoop-core</artifactId>
-	<version>0.20.2</version>
-</dependency>
-
 	</dependencies>
+
+	<distributionManagement>
+		<repository>
+			<id>202.120.40.161</id>
+			<url>scpexe://hadoop@202.120.40.161/home/hadoop</url>
+		</repository>
+	</distributionManagement>
 
 </project>
