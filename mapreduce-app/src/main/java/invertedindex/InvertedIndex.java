@@ -29,12 +29,11 @@ public class InvertedIndex {
 
 	public static class InvertedIndexMapper extends
 			Mapper<Text, Text, Text, Text> {
+		private Set<String> frequentWords = new LinkedHashSet<String>();
 
 		@Override
-		public void map(Text key, Text value, Context context)
-				throws IOException, InterruptedException {
-
-			Set<String> frequentWords = new LinkedHashSet<String>();
+		protected void setup(Context context) throws IOException,
+				InterruptedException {
 			BufferedReader br = new BufferedReader(new InputStreamReader(
 					new FileInputStream(FREQUENT_WORDS_FILE)));
 			String line;
@@ -42,7 +41,11 @@ public class InvertedIndex {
 				frequentWords.addAll(Arrays.asList(line.split(" ")));
 			}
 			br.close();
+		};
 
+		@Override
+		public void map(Text key, Text value, Context context)
+				throws IOException, InterruptedException {
 			if (!frequentWords.contains(key.toString())) {
 				context.write(key, value);
 			}
